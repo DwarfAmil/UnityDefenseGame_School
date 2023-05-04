@@ -1,11 +1,13 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Bullet : MonoBehaviour
 {
     private Transform _target;
     [SerializeField] private float _speed = 70f;
     [SerializeField] private GameObject _impactEffect;
+    
+    // -값이 들어가야 hp가 감소함
+    [SerializeField] private float _damage;
     
     public void Seek (Transform target)
     {
@@ -36,7 +38,8 @@ public class Bullet : MonoBehaviour
     {
         GameObject effectIns = Instantiate(_impactEffect, transform.position, transform.rotation);
         Destroy(effectIns, 5f);
-        Destroy(_target.gameObject);
+        //Destroy(_target.gameObject);
+        _target.GetComponent<Enemy>().ComputeHP(_damage);
         Destroy(gameObject);
     }
 }
